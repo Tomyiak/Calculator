@@ -1,5 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import (QApplication, QWidget,
+                             QLineEdit, QHBoxLayout,
+                             QVBoxLayout, QPushButton)
 
 
 class Calculator(QWidget):
@@ -10,22 +12,20 @@ class Calculator(QWidget):
         self.vbox = QVBoxLayout(self)
 
         # HBoxLayout
-        self.hbox_result = QHBoxLayout()
-        self.hbox_input = QHBoxLayout()
-        self.hbox_first = QHBoxLayout()
-        self.hbox_second = QHBoxLayout()
-        self.hbox_third = QHBoxLayout()
-        self.hbox_fourth = QHBoxLayout()
-        self.hbox_fifth = QHBoxLayout()
+        self.hbox_result = QHBoxLayout() # Создаём 5 строку
+        self.hbox_input = QHBoxLayout() # Создаём строку вывода
+        self.hbox_first = QHBoxLayout() # Создаём 1 строку
+        self.hbox_second = QHBoxLayout() # Создаём 2 строку
+        self.hbox_third = QHBoxLayout() # Создаём 3 строку
+        self.hbox_fourth = QHBoxLayout() # Создаём 4 строку
 
         # Connect hbox and Layout
-        self.vbox.addLayout(self.hbox_input)
-        self.vbox.addLayout(self.hbox_first)
-        self.vbox.addLayout(self.hbox_second)
-        self.vbox.addLayout(self.hbox_third)
-        self.vbox.addLayout(self.hbox_fourth)
-        self.vbox.addLayout(self.hbox_fifth)
-        self.vbox.addLayout(self.hbox_result)
+        self.vbox.addLayout(self.hbox_input)  # Добавляем строку вывода
+        self.vbox.addLayout(self.hbox_first) # Добавляем 1 строку
+        self.vbox.addLayout(self.hbox_second) # Добавляем 2 строку
+        self.vbox.addLayout(self.hbox_third) # Добавляем 3 строку
+        self.vbox.addLayout(self.hbox_fourth) # Добавляем 4 строку
+        self.vbox.addLayout(self.hbox_result)  # Добавляем 5 строку
 
         self.input = QLineEdit(self)
         self.hbox_input.addWidget(self.input)
@@ -66,9 +66,13 @@ class Calculator(QWidget):
         self.b_9 = QPushButton("9", self)
         self.hbox_fourth.addWidget(self.b_9)
 
+        # Button "/"
+        self.b_division = QPushButton("/", self)
+        self.hbox_result.addWidget(self.b_division)
+
         # Button "0"
         self.b_0 = QPushButton("0", self)
-        self.hbox_first.addWidget(self.b_0)
+        self.hbox_result.addWidget(self.b_0)
 
         # Button "+"
         self.b_plus = QPushButton("+", self)
@@ -82,30 +86,18 @@ class Calculator(QWidget):
         self.b_multiplication = QPushButton("*", self)
         self.hbox_first.addWidget(self.b_multiplication)
 
-        # Button "/"
-        self.b_division = QPushButton("/", self)
-        self.hbox_first.addWidget(self.b_division)
-
         # Button "="
         self.b_result = QPushButton("=", self)
         self.hbox_result.addWidget(self.b_result)
 
-        # Push button "+"
+        # Регистрация нажатия кнопок операций
         self.b_plus.clicked.connect(lambda: self.operation("+"))
-
-        # Push button "-"
         self.b_minus.clicked.connect(lambda: self.operation("-"))
-
-        # Push button "*"
         self.b_multiplication.clicked.connect(lambda: self.operation("*"))
-
-        # Push button "/"
         self.b_division.clicked.connect(lambda: self.operation("/"))
-
-        # Push button "="
         self.b_result.clicked.connect(self._result)
 
-        # Push button of number
+        # Регистрация нажатия кнопок чисел
         self.b_1.clicked.connect(lambda: self._button("1"))
         self.b_2.clicked.connect(lambda: self._button("2"))
         self.b_3.clicked.connect(lambda: self._button("3"))
@@ -140,7 +132,7 @@ class Calculator(QWidget):
             self.input.setText(str(self.num_1 * self.num_2))
         if self.op == "/":
             if self.num_2 == 0:
-                self.input.setText("Error: при делениии на 0 нет вещественных значений")
+                self.input.setText("ZeroDivisionError: division by zero")
             else:
                 self.input.setText(str(self.num_1 / self.num_2))
         elif self.op == "=":
