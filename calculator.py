@@ -12,19 +12,19 @@ class Calculator(QWidget):
         self.vbox = QVBoxLayout(self)
 
         # HBoxLayout
-        self.hbox_result = QHBoxLayout() # Создаём 5 строку
-        self.hbox_input = QHBoxLayout() # Создаём строку вывода
-        self.hbox_first = QHBoxLayout() # Создаём 1 строку
-        self.hbox_second = QHBoxLayout() # Создаём 2 строку
-        self.hbox_third = QHBoxLayout() # Создаём 3 строку
-        self.hbox_fourth = QHBoxLayout() # Создаём 4 строку
+        self.hbox_result = QHBoxLayout()  # Создаём 5 строку
+        self.hbox_input = QHBoxLayout()  # Создаём строку ввода
+        self.hbox_first = QHBoxLayout()  # Создаём 1 строку
+        self.hbox_second = QHBoxLayout()  # Создаём 2 строку
+        self.hbox_third = QHBoxLayout()  # Создаём 3 строку
+        self.hbox_fourth = QHBoxLayout()  # Создаём 4 строку
 
         # Connect hbox and Layout
         self.vbox.addLayout(self.hbox_input)  # Добавляем строку вывода
-        self.vbox.addLayout(self.hbox_first) # Добавляем 1 строку
-        self.vbox.addLayout(self.hbox_second) # Добавляем 2 строку
-        self.vbox.addLayout(self.hbox_third) # Добавляем 3 строку
-        self.vbox.addLayout(self.hbox_fourth) # Добавляем 4 строку
+        self.vbox.addLayout(self.hbox_first)  # Добавляем 1 строку
+        self.vbox.addLayout(self.hbox_second)  # Добавляем 2 строку
+        self.vbox.addLayout(self.hbox_third)  # Добавляем 3 строку
+        self.vbox.addLayout(self.hbox_fourth)  # Добавляем 4 строку
         self.vbox.addLayout(self.hbox_result)  # Добавляем 5 строку
 
         self.input = QLineEdit(self)
@@ -90,6 +90,10 @@ class Calculator(QWidget):
         self.b_result = QPushButton("=", self)
         self.hbox_result.addWidget(self.b_result)
 
+        # Button "."
+        self.b_dot = QPushButton(".", self)
+        self.hbox_result.addWidget(self.b_dot)
+
         # Регистрация нажатия кнопок операций
         self.b_plus.clicked.connect(lambda: self.operation("+"))
         self.b_minus.clicked.connect(lambda: self.operation("-"))
@@ -108,22 +112,24 @@ class Calculator(QWidget):
         self.b_8.clicked.connect(lambda: self._button("8"))
         self.b_9.clicked.connect(lambda: self._button("9"))
         self.b_0.clicked.connect(lambda: self._button("0"))
+        self.b_dot.clicked.connect(lambda: self._button("."))
 
-        self.move(300, 300)
+
+        self.move(350, 300)
         self.setWindowTitle('Calculator')
         self.show()
 
-    def _button (self, param):
+    def _button(self, param):
         line = self.input.text()
         self.input.setText(line + param)
 
     def operation(self, op):
-        self.num_1 = int(self.input.text())
+        self.num_1 = float(self.input.text())
         self.op = op
         self.input.setText("")
 
     def _result(self):
-        self.num_2 = int(self.input.text())
+        self.num_2 = float(self.input.text())
         if self.op == "+":
             self.input.setText(str(self.num_1 + self.num_2))
         if self.op == "-":
